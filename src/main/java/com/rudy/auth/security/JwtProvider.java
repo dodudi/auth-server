@@ -3,6 +3,7 @@ package com.rudy.auth.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -10,15 +11,27 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtTokenProvider {
+public class JwtProvider {
     private final Key secretKey;
     private final static long EXPIRE_TIME = 3600000;
 
-    public JwtTokenProvider() {
+    public JwtProvider() {
         this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
-    public String createToken(Map<String, Object> claims) {
+    public String generateToken(Authentication authentication) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + EXPIRE_TIME);
+
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(secretKey)
+                .compact();
+    }
+
+    public String generateToken(Map<String, Object> claims) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + EXPIRE_TIME);
 
