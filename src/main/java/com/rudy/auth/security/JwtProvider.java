@@ -1,8 +1,8 @@
 package com.rudy.auth.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class JwtProvider {
     private final Key secretKey;
@@ -58,8 +59,17 @@ public class JwtProvider {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
-            return false;
+        } catch (ExpiredJwtException e) {
+            log.error("token has expired: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            log.error("invalid jwt format: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            log.error("Unsupported JWT: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            log.error("Token is null or empty: {}", e.getMessage());
+        } catch (JwtException e) {
+            log.error("JWT error: {}", e.getMessage());
         }
+        return false;
     }
 }
