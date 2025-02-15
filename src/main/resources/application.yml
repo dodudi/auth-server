@@ -18,6 +18,10 @@ spring:
       enabled: true
       path: /h2-console
 
+logging:
+  level:
+    com.rudy.auth: debug
+
 jwt:
   access-token:
     expiration: 3600
