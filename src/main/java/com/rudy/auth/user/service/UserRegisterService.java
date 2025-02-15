@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserRegisterService {
@@ -20,10 +22,10 @@ public class UserRegisterService {
         String username = request.getUsername();
         String password = request.getPassword();
 
-        String encodePassword = passwordEncoder.encode(password);
-        UserInfo user = new UserInfo(username, encodePassword);
-        userRepository.save(user);
+        UserInfo userInfo = userRepository.findByUsername(username)
+                .orElseGet(() -> new UserInfo(username, passwordEncoder.encode(password)));
 
-        return new UserRegisterResponse(user.getUsername(), user.getCreateDateTime(), user.getUpdateDateTime());
+        userRepository.save(userInfo);
+        return new UserRegisterResponse(userInfo.getUsername(), userInfo.getCreateDateTime(), userInfo.getUpdateDateTime());
     }
 }
