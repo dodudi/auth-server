@@ -5,7 +5,11 @@ plugins {
 }
 
 group = 'com.rudy'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
+
+ext {
+    repository = 'didadu'
+}
 
 java {
     toolchain {
@@ -45,6 +49,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
+tasks.register('push', Exec) {
+    workingDir "$projectDir"
+    commandLine "sh", "./docker/deploy.sh", version, repository
+}
+
+tasks.jar {
+    enabled = false
+}
+
+tasks.test {
     useJUnitPlatform()
 }
