@@ -17,11 +17,11 @@ public class JwtProvider {
     private final Key key;
 
     @Getter
-    @Value("${jwt.access-token.expiration}")
+    @Value("${jwt.access-token.expiration-second}")
     private long accessTokenExpiration;
 
     @Getter
-    @Value("${jwt.refresh-token.expiration}")
+    @Value("${jwt.refresh-token.expiration-second}")
     private long refreshTokenExpiration;
 
     public JwtProvider(@Value("${jwt.key}") String secretKey) {
@@ -32,7 +32,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + (accessTokenExpiration * 1000)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -41,7 +41,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + (refreshTokenExpiration * 1000)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -24,7 +24,7 @@ logging:
 
 jwt:
   access-token:
-    expiration: 3600
+    expiration-second: 3600
   refresh-token:
-    expiration: 7200
+    expiration-second: 7200
   key: thisismytestkeythisismytestkeythisismytestkeythisismytestkey
