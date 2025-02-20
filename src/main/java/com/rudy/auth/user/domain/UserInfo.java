@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class UserInfo extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
+
+    @OneToMany(mappedBy = "userInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRole> userRoles = new ArrayList<>();
+
     private String username;
     private String password;
 
@@ -27,9 +32,21 @@ public class UserInfo extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
+    public void addUserRole(RoleInfo roleInfo) {
+        boolean exists = userRoles.stream()
+                .anyMatch(userRole -> userRole.getRoleInfo().equals(roleInfo));
+
+        if (!exists) {
+            UserRole userRole = new UserRole(this, roleInfo);
+            userRoles.add(userRole);
+        }
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return userRoles.stream()
+                .map(UserRole::getAuthority)
+                .toList();
     }
 
     @Override

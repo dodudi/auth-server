@@ -1,7 +1,9 @@
 package com.rudy.auth.user.service;
 
+import com.rudy.auth.user.domain.RoleInfo;
 import com.rudy.auth.user.domain.UserInfo;
-import com.rudy.auth.user.repository.UserRepository;
+import com.rudy.auth.user.repository.RoleInfoRepository;
+import com.rudy.auth.user.repository.UserInfoRepository;
 import com.rudy.auth.user.request.UserRegisterRequest;
 import com.rudy.auth.user.response.UserRegisterResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserRegisterService {
-    private final UserRepository userRepository;
+    private final UserInfoRepository userInfoRepository;
+    private final RoleInfoRepository roleInfoRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -22,10 +26,26 @@ public class UserRegisterService {
         String username = request.getUsername();
         String password = request.getPassword();
 
-        UserInfo userInfo = userRepository.findByUsername(username)
+        List<RoleInfo> roleInfos = request.getRoleNames().stream()
+                .filter(s -> !s.equals("admin"))
+                .map(s -> roleInfoRepository
+                        .findByRoleName(s)
+                        .orElseGet(() -> roleInfoRepository.save(new RoleInfo(s))))
+                .toList();
+
+        UserInfo userInfo = userInfoRepository.findByUsername(username)
                 .orElseGet(() -> new UserInfo(username, passwordEncoder.encode(password)));
 
-        userRepository.save(userInfo);
-        return new UserRegisterResponse(userInfo.getUsername(), userInfo.getCreateDateTime(), userInfo.getUpdateDateTime());
+        for (RoleInfo roleInfo : roleInfos) {
+            userInfo.addUserRole(roleInfo);
+        }
+
+        userInfoRepository.save(userInfo);
+        return new UserRegisterResponse(
+                userInfo.getUsername(),
+                userInfo.getUserRoles().stream().map(userRole -> userRole.getRoleInfo().getRoleName()).toList(),
+                userInfo.getCreateDateTime(),
+                userInfo.getUpdateDateTime()
+        );
     }
 }
