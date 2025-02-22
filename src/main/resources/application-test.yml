@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+logging:
+  level:
+    com.rudy.auth: debug
+
+jwt:
+  access-token:
+    expiration-second: 3600
+  refresh-token:
+    expiration-second: 7200
+  key: thisismytestkeythisismytestkeythisismytestkeythisismytestkey
