@@ -1,7 +1,8 @@
-package com.rudy.auth.jwt.filter;
+package com.rudy.auth.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rudy.auth.jwt.JwtProvider;
+import com.rudy.auth.global.ErrorResponse;
+import com.rudy.auth.jwt.provider.JwtProvider;
 import com.rudy.auth.user.request.LoginRequest;
 import com.rudy.auth.user.response.LoginResponse;
 import jakarta.servlet.FilterChain;
@@ -73,7 +74,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json;charset=UTF-8");
         response.setContentType("application/json");
-        response.getWriter().write("{\"error\": \"" + failed.getMessage() + "\"}");
-        response.getWriter().flush();
+
+        ErrorResponse errorResponse = new ErrorResponse(failed.getMessage(), 401);
+        objectMapper.writeValue(response.getOutputStream(), errorResponse);
     }
 }

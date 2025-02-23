@@ -1,8 +1,10 @@
-package com.rudy.auth.config;
+package com.rudy.auth.security.config;
 
-import com.rudy.auth.jwt.JwtProvider;
-import com.rudy.auth.jwt.filter.JwtAuthenticationFilter;
-import com.rudy.auth.jwt.filter.LoginFilter;
+import com.rudy.auth.security.exception.CustomAccessDeniedHandler;
+import com.rudy.auth.security.exception.CustomAuthenticationEntryPoint;
+import com.rudy.auth.jwt.provider.JwtProvider;
+import com.rudy.auth.security.filter.JwtAuthenticationFilter;
+import com.rudy.auth.security.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,17 +25,24 @@ public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
     private final UserDetailsService userDetailsService;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
         AuthenticationManager authenticationManager = authConfig.getAuthenticationManager();
 
-
         http.csrf(AbstractHttpConfigurer::disable);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/users").permitAll()
+                .requestMatchers("/jwt/validate").permitAll()
                 .anyRequest().authenticated());
+
+        http.exceptionHandling(ex -> ex
+                .accessDeniedHandler(customAccessDeniedHandler)
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+        );
 
         LoginFilter loginFilter = new LoginFilter(authenticationManager, jwtProvider);
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtProvider, userDetailsService);

@@ -1,6 +1,6 @@
-package com.rudy.auth.jwt.filter;
+package com.rudy.auth.security.filter;
 
-import com.rudy.auth.jwt.JwtProvider;
+import com.rudy.auth.jwt.provider.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-
         return path.startsWith("/login");
     }
 }

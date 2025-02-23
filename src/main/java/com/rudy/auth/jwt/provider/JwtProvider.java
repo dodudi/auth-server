@@ -1,4 +1,4 @@
-package com.rudy.auth.jwt;
+package com.rudy.auth.jwt.provider;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -55,7 +55,7 @@ public class JwtProvider {
                 .getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) throws Exception {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -63,7 +63,7 @@ public class JwtProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            throw new Exception("Invalid JWT token", e);
         }
     }
 

@@ -1,0 +1,20 @@
+package com.rudy.auth.jwt.controller;
+
+import com.rudy.auth.jwt.response.JwtValidateResponse;
+import com.rudy.auth.jwt.service.JwtService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/jwt")
+public class JwtController {
+    private final JwtService jwtService;
+
+    @GetMapping("/validate")
+    public ResponseEntity<JwtValidateResponse> validateJwt(@RequestParam(required = true, name = "token") String token) {
+        JwtValidateResponse jwtValidateResponse = jwtService.validateToken(token);
+        return ResponseEntity.ok(jwtValidateResponse);
+    }
+}
