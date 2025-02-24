@@ -1,7 +1,7 @@
-package com.rudy.auth.security.filter;
+package com.rudy.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rudy.auth.global.ErrorResponse;
+import com.rudy.auth.exception.ErrorResponse;
 import com.rudy.auth.jwt.provider.JwtProvider;
 import com.rudy.auth.user.request.LoginRequest;
 import com.rudy.auth.user.response.LoginResponse;

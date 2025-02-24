@@ -1,4 +1,4 @@
-package com.rudy.auth.global;
+package com.rudy.auth.exception;
 
 import lombok.Getter;
 

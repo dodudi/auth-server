@@ -1,4 +1,4 @@
-package com.rudy.auth.security.filter;
+package com.rudy.auth.filter;
 
 import com.rudy.auth.jwt.provider.JwtProvider;
 import jakarta.servlet.FilterChain;

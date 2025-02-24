@@ -1,7 +1,6 @@
-package com.rudy.auth.security.exception;
+package com.rudy.auth.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rudy.auth.global.ErrorResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

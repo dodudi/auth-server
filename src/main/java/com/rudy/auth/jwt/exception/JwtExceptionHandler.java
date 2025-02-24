@@ -1,6 +1,6 @@
 package com.rudy.auth.jwt.exception;
 
-import com.rudy.auth.global.ErrorResponse;
+import com.rudy.auth.exception.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

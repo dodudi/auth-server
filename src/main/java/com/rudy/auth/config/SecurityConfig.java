@@ -1,10 +1,10 @@
-package com.rudy.auth.security.config;
+package com.rudy.auth.config;
 
-import com.rudy.auth.security.exception.CustomAccessDeniedHandler;
-import com.rudy.auth.security.exception.CustomAuthenticationEntryPoint;
+import com.rudy.auth.exception.CustomAccessDeniedHandler;
+import com.rudy.auth.exception.CustomAuthenticationEntryPoint;
 import com.rudy.auth.jwt.provider.JwtProvider;
-import com.rudy.auth.security.filter.JwtAuthenticationFilter;
-import com.rudy.auth.security.filter.LoginFilter;
+import com.rudy.auth.filter.JwtAuthenticationFilter;
+import com.rudy.auth.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
