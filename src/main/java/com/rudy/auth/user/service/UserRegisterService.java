@@ -27,7 +27,7 @@ public class UserRegisterService {
         String password = request.getPassword();
 
         List<RoleInfo> roleInfos = request.getRoleNames().stream()
-                .filter(s -> !s.equals("admin"))
+//                .filter(s -> !s.equals("admin"))
                 .map(s -> roleInfoRepository
                         .findByRoleName(s)
                         .orElseGet(() -> roleInfoRepository.save(new RoleInfo(s))))

@@ -19,7 +19,7 @@ public class UserRegisterRequest {
 
     public List<String> getRoleNames() {
         return roleTypes.stream()
-                .map(RoleType::getRoleName)
+                .map(RoleType::name)
                 .toList();
     }
 }
