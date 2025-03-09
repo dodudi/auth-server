@@ -36,9 +36,14 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(request -> request
-                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
-                .requestMatchers("/users").permitAll()
-                .requestMatchers("/jwt/validate").permitAll()
+//                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
+                .requestMatchers("/jwt/validate", "/users").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs").permitAll()
+                .requestMatchers(
+                        "/v3/api-docs/**", // Swagger API docs 허용
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
                 .anyRequest().authenticated());
 
         http.exceptionHandling(ex -> ex
