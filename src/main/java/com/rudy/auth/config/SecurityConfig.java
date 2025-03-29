@@ -38,12 +38,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request -> request
 //                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
                 .requestMatchers("/jwt/validate", "/users").permitAll()
-                .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs").permitAll()
-                .requestMatchers(
-                        "/v3/api-docs/**", // Swagger API docs 허용
-                        "/swagger-ui/**",
-                        "/swagger-ui.html"
-                ).permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/v3/api-docs/swagger-config").permitAll()
+                .requestMatchers("/api/auth/v3/api-docs/**", "/api/auth/swagger-ui/**", "/api/auth/swagger-ui.html").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated());
 
         http.exceptionHandling(ex -> ex

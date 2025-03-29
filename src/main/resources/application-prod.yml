@@ -16,7 +16,14 @@ spring:
       data-locations: classpath:sql/data.sql
 logging:
   level:
-    com.rudy.auth: ${SPRING_LOG_LEVEL}
+    com.rudy.auth: ${SPRING_LOG_LEVEL:info}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    config-url: /api/auth/v3/api-docs/swagger-config
+    url: /api/auth/v3/api-docs
 
 jwt:
   access-token:
