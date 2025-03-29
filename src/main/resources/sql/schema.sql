@@ -1,18 +1,18 @@
 CREATE TABLE IF NOT EXISTS role_info
 (
     role_id          SERIAL PRIMARY KEY,
+    role_name VARCHAR(255) UNIQUE,
     create_date_time TIMESTAMP(6),
-    update_date_time TIMESTAMP(6),
-    role_name VARCHAR(255) UNIQUE
+    update_date_time TIMESTAMP(6)
 );
 
 CREATE TABLE IF NOT EXISTS user_info
 (
     user_id          SERIAL PRIMARY KEY,
-    create_date_time TIMESTAMP(6),
-    update_date_time TIMESTAMP(6),
     password         VARCHAR(255),
-    username         VARCHAR(255)
+    username         VARCHAR(255),
+    create_date_time TIMESTAMP(6),
+    update_date_time TIMESTAMP(6)
 );
 
 CREATE TABLE IF NOT EXISTS user_role

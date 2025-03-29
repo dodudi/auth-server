@@ -1,5 +1,5 @@
-INSERT INTO role_info (create_date_time, update_date_time, role_name)
-VALUES (NOW(), NOW(), 'ADMIN'),
-       (NOW(), NOW(), 'USER'),
-       (NOW(), NOW(), 'GUEST')
+INSERT INTO role_info (role_name, create_date_time, update_date_time )
+VALUES ('ADMIN', NOW(), NOW()),
+       ('USER', NOW(), NOW()),
+       ('GUEST', NOW(), NOW())
 ON CONFLICT (role_name) DO NOTHING;
