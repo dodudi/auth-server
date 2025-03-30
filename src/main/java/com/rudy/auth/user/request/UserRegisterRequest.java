@@ -1,25 +1,18 @@
 package com.rudy.auth.user.request;
 
-import com.rudy.auth.user.domain.RoleType;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class UserRegisterRequest {
+    @NotEmpty(message = "username must not be empty")
     private final String username;
-    private final String password;
-    private final List<RoleType> roleTypes;
 
-    public UserRegisterRequest(String username, String password, List<RoleType> roleTypes) {
+    @NotEmpty(message = "username must not be empty")
+    private final String password;
+
+    public UserRegisterRequest(String username, String password) {
         this.username = username;
         this.password = password;
-        this.roleTypes = roleTypes;
-    }
-
-    public List<String> getRoleNames() {
-        return roleTypes.stream()
-                .map(RoleType::name)
-                .toList();
     }
 }

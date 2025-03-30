@@ -11,11 +11,15 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
   h2:
     console:
       enabled: true
       path: /h2-console
-
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/test/data.sql
 logging:
   level:
     com.rudy.auth: debug

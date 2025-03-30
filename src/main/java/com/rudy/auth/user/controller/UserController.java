@@ -1,8 +1,9 @@
 package com.rudy.auth.user.controller;
 
+import com.rudy.auth.user.request.UserRoleUpdateRequest;
 import com.rudy.auth.user.request.UserRegisterRequest;
-import com.rudy.auth.user.response.UserRegisterResponse;
-import com.rudy.auth.user.response.UserSearchResponse;
+import com.rudy.auth.user.response.UserInfoResponse;
+import com.rudy.auth.user.service.UserRoleUpdateService;
 import com.rudy.auth.user.service.UserRegisterService;
 import com.rudy.auth.user.service.UserSearchService;
 import lombok.RequiredArgsConstructor;
@@ -16,19 +17,25 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
+    private final UserRoleUpdateService userRoleUpdateService;
     private final UserRegisterService userRegisterService;
     private final UserSearchService userSearchService;
 
     @GetMapping
-    public ResponseEntity<List<UserSearchResponse>> getUserRegister(Pageable pageable) {
-        List<UserSearchResponse> response = userSearchService.findAll(pageable);
+    public ResponseEntity<List<UserInfoResponse>> getUsers(Pageable pageable) {
+        List<UserInfoResponse> response = userSearchService.findAll(pageable);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
-        UserRegisterResponse register = userRegisterService.register(userRegisterRequest);
+    public ResponseEntity<UserInfoResponse> register(@RequestBody UserRegisterRequest request) {
+        UserInfoResponse register = userRegisterService.register(request);
         return ResponseEntity.ok(register);
     }
 
+    @PutMapping("/{userId}/roles")
+    public ResponseEntity<UserInfoResponse> updateRoles(@PathVariable("userId") Integer userId, @RequestBody UserRoleUpdateRequest request) {
+        UserInfoResponse updateRole = userRoleUpdateService.updateRoles(userId, request);
+        return ResponseEntity.ok(updateRole);
+    }
 }

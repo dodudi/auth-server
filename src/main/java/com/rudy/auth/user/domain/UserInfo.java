@@ -31,17 +31,7 @@ public class UserInfo extends BaseEntity implements UserDetails {
         this.username = username;
         this.password = password;
     }
-
-    public void addUserRole(RoleInfo roleInfo) {
-        boolean exists = userRoles.stream()
-                .anyMatch(userRole -> userRole.getRoleInfo().equals(roleInfo));
-
-        if (!exists) {
-            UserRole userRole = new UserRole(this, roleInfo);
-            userRoles.add(userRole);
-        }
-    }
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRoles.stream()

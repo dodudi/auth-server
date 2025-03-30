@@ -1,6 +1,7 @@
 package com.rudy.auth.user.service;
 
 import com.rudy.auth.user.repository.UserInfoRepository;
+import com.rudy.auth.user.response.UserInfoResponse;
 import com.rudy.auth.user.response.UserSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +16,9 @@ public class UserSearchService {
     private final UserInfoRepository userInfoRepository;
 
     @Transactional(readOnly = true)
-    public List<UserSearchResponse> findAll(Pageable pageable) {
+    public List<UserInfoResponse> findAll(Pageable pageable) {
         return userInfoRepository.findAll(pageable)
-                .map(UserSearchResponse::new)
+                .map(UserInfoResponse::new)
                 .toList();
     }
 }

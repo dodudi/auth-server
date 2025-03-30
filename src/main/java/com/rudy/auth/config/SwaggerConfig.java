@@ -22,7 +22,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(getDescription())
-                .servers(List.of(new Server().url("/api/auth")))
+                .servers(List.of(new Server().url("/api/auth"), new Server().url("/")))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("bearerAuth", new SecurityScheme()

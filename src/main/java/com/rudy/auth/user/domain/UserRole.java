@@ -28,6 +28,8 @@ public class UserRole extends BaseEntity {
 
     public UserRole(UserInfo userInfo, RoleInfo roleInfo) {
         this.userInfo = userInfo;
+        userInfo.getUserRoles().add(this);
+
         this.roleInfo = roleInfo;
     }
 
