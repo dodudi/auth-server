@@ -32,7 +32,16 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN").requestMatchers(HttpMethod.PUT, "/users/{userId}/roles").hasAuthority("ADMIN").requestMatchers(HttpMethod.POST, "/users").permitAll().requestMatchers(HttpMethod.GET, "/jwt/validate").permitAll().requestMatchers(HttpMethod.POST, "/jwt/login").permitAll().requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/v3/api-docs/swagger-config").permitAll().requestMatchers(HttpMethod.GET, "/api/auth/v3/api-docs/**", "/api/auth/swagger-ui/**", "/api/auth/swagger-ui.html").permitAll().anyRequest().authenticated());
+        http.authorizeHttpRequests(request -> request
+                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/users/{userId}/roles").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.GET, "/jwt/validate").permitAll()
+                .requestMatchers(HttpMethod.POST, "/jwt/login").permitAll()
+                .requestMatchers("/actuator/prometheus").permitAll()
+                .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/v3/api-docs/swagger-config")
+                .permitAll().requestMatchers(HttpMethod.GET, "/api/auth/v3/api-docs/**", "/api/auth/swagger-ui/**", "/api/auth/swagger-ui.html")
+                .permitAll().anyRequest().authenticated());
 
         http.exceptionHandling(ex -> ex.accessDeniedHandler(customAccessDeniedHandler).authenticationEntryPoint(customAuthenticationEntryPoint));
 
