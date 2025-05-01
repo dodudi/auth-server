@@ -1,5 +1,7 @@
 package com.rudy.auth.jwt.service;
 
+import com.rudy.auth.exception.CustomException;
+import com.rudy.auth.exception.ErrorStatus;
 import com.rudy.auth.jwt.provider.JwtProvider;
 import com.rudy.auth.jwt.request.LoginRequest;
 import com.rudy.auth.user.domain.UserInfo;
@@ -24,9 +26,9 @@ public class LoginService {
         String password = request.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
-        UserInfo userInfo = userInfoRepository.findByFetchUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        UserInfo userInfo = userInfoRepository.findByFetchUsername(username).orElseThrow(() -> new CustomException(ErrorStatus.BAD_CREDENTIAL));
         if (!passwordEncoder.matches(password, userInfo.getPassword())) {
-            throw new BadCredentialsException("Bad credentials");
+            throw new CustomException(ErrorStatus.BAD_CREDENTIAL);
         }
 
         String accessToken = jwtProvider.generateAccessToken(username);

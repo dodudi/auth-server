@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorStatus {
-    DUPLICATE_USER_NAME(404, "already exists username");
+    DUPLICATE_USERNAME(404, "already exists username"),
+    BAD_CREDENTIAL(401, "username or password incorrect");
 
     private final int status;
     private final String message;

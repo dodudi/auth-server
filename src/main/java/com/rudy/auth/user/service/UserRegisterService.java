@@ -33,7 +33,7 @@ public class UserRegisterService {
         String password = request.getPassword();
 
         if (userInfoRepository.existsByUsername(username))
-            throw new CustomException(ErrorStatus.DUPLICATE_USER_NAME);
+            throw new CustomException(ErrorStatus.DUPLICATE_USERNAME);
 
         RoleInfo roleInfo = roleInfoRepository.findByRoleName(RoleType.USER.name())
                 .orElseThrow(() -> new IllegalArgumentException("role not found"));
