@@ -11,4 +11,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
     Optional<UserInfo> findByFetchUsername(String username);
 
     Optional<UserInfo> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }

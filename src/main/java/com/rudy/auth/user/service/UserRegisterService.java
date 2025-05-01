@@ -1,5 +1,7 @@
 package com.rudy.auth.user.service;
 
+import com.rudy.auth.exception.CustomException;
+import com.rudy.auth.exception.ErrorStatus;
 import com.rudy.auth.user.domain.RoleInfo;
 import com.rudy.auth.user.domain.RoleType;
 import com.rudy.auth.user.domain.UserInfo;
@@ -30,11 +32,13 @@ public class UserRegisterService {
         String username = request.getUsername();
         String password = request.getPassword();
 
+        if (userInfoRepository.existsByUsername(username))
+            throw new CustomException(ErrorStatus.DUPLICATE_USER_NAME);
+
         RoleInfo roleInfo = roleInfoRepository.findByRoleName(RoleType.USER.name())
                 .orElseThrow(() -> new IllegalArgumentException("role not found"));
 
-        UserInfo userInfo = userInfoRepository.findByUsername(username)
-                .orElseGet(() -> new UserInfo(username, passwordEncoder.encode(password)));
+        UserInfo userInfo = new UserInfo(username, passwordEncoder.encode(password));
         userInfoRepository.save(userInfo);
 
         if (userInfo.getUserRoles().isEmpty()) {
