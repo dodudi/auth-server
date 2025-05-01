@@ -6,6 +6,7 @@ import com.rudy.auth.jwt.service.JwtService;
 import com.rudy.auth.jwt.service.LoginService;
 import com.rudy.auth.user.response.LoginResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class JwtController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request, HttpServletResponse servletResponse) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpServletResponse servletResponse) {
         LoginResponse response = loginService.login(request);
         servletResponse.setHeader("Authorization", "Bearer " + response.getAccessToken());
         return ResponseEntity.ok(response);
