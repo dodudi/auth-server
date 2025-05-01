@@ -23,7 +23,7 @@ spring:
 logging:
   level:
     com.rudy.auth: debug
-
+    org.hibernate.validator: debug
 jwt:
   access-token:
     expiration-second: 3600

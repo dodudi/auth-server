@@ -1,11 +1,12 @@
 package com.rudy.auth.user.controller;
 
-import com.rudy.auth.user.request.UserRoleUpdateRequest;
 import com.rudy.auth.user.request.UserRegisterRequest;
+import com.rudy.auth.user.request.UserRoleUpdateRequest;
 import com.rudy.auth.user.response.UserInfoResponse;
-import com.rudy.auth.user.service.UserRoleUpdateService;
 import com.rudy.auth.user.service.UserRegisterService;
+import com.rudy.auth.user.service.UserRoleUpdateService;
 import com.rudy.auth.user.service.UserSearchService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserInfoResponse> register(@RequestBody UserRegisterRequest request) {
+    public ResponseEntity<UserInfoResponse> register(@RequestBody @Valid UserRegisterRequest request) {
         UserInfoResponse register = userRegisterService.register(request);
         return ResponseEntity.ok(register);
     }

@@ -8,7 +8,7 @@ public class UserRegisterRequest {
     @NotEmpty(message = "username must not be empty")
     private final String username;
 
-    @NotEmpty(message = "username must not be empty")
+    @NotEmpty(message = "password must not be empty")
     private final String password;
 
     public UserRegisterRequest(String username, String password) {
