@@ -17,15 +17,9 @@ public class ClientInfo extends BaseEntity {
     private Integer id;
     private String clientId;
     private String clientSecret;
-    private String scope;
-    private String accessToken;
-    private String refreshToken;
 
-    public ClientInfo(String clientId, String clientSecret, String scope, String accessToken, String refreshToken) {
+    public ClientInfo(String clientId, String clientSecret) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.scope = scope;
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
     }
 }
