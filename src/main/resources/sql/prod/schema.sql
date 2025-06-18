@@ -25,3 +25,10 @@ CREATE TABLE IF NOT EXISTS user_role
     CONSTRAINT FK_role_id FOREIGN KEY (role_id) REFERENCES role_info (role_id),
     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES user_info (user_id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE IF NOT EXISTS client_info
+(
+    id SERIAL PRIMARY KEY,
+
+);

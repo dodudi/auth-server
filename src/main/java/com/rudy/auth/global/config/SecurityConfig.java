@@ -1,4 +1,4 @@
-package com.rudy.auth.config;
+package com.rudy.auth.global.config;
 
 import com.rudy.auth.exception.CustomAccessDeniedHandler;
 import com.rudy.auth.exception.CustomAuthenticationEntryPoint;
@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/users/{userId}/roles").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/jwt/validate").permitAll()
+                .requestMatchers(HttpMethod.POST, "/jwt/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/jwt/login").permitAll()
                 .requestMatchers("/actuator/prometheus").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/v3/api-docs/swagger-config")

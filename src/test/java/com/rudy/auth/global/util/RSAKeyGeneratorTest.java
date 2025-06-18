@@ -1,5 +1,6 @@
 package com.rudy.auth.global.util;
 
+import com.rudy.auth.global.response.RSAKeyResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 @Slf4j
 @SpringBootTest
@@ -20,9 +20,9 @@ class RSAKeyGeneratorTest {
     @DisplayName(value = "RSA KEY 생성 테스트")
     void generate() {
         try {
-            Map<String, Object> generate = rsaKeyGenerator.generate();
-            log.info("private key: {}", generate.get("privateKey"));
-            log.info("public key: {}", generate.get("publicKey"));
+            RSAKeyResponse key = rsaKeyGenerator.generate();
+            log.info("private key: {}", key.getPrivateKey());
+            log.info("public key: {}", key.getPublicKey());
         } catch (NoSuchAlgorithmException e) {
             log.error("error: {}", e.getMessage(), e);
         }
