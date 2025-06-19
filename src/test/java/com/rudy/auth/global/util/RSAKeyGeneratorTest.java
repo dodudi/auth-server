@@ -21,8 +21,8 @@ class RSAKeyGeneratorTest {
     void generate() {
         try {
             RSAKeyResponse key = rsaKeyGenerator.generate();
-            log.info("private key: {}", key.getPrivateKey());
-            log.info("public key: {}", key.getPublicKey());
+            log.info("private key: {}", key.convertPrivateKeyToString());
+            log.info("public key: {}", key.convertPublicKeyToString());
         } catch (NoSuchAlgorithmException e) {
             log.error("error: {}", e.getMessage(), e);
         }
