@@ -18,8 +18,8 @@ public class ClientInfoService {
     public String register(ClientRegistRequest clientRegistRequest) {
         final String clientId = clientRegistRequest.getClientId();
         final String clientSecret = clientRegistRequest.getClientSecret();
-        Assert.notNull(clientId, "client id must not be null");
-        Assert.notNull(clientSecret, "client secret must not be null");
+        Assert.hasText(clientId, "client id must not be null");
+        Assert.hasText(clientSecret, "client secret must not be null");
 
         //시크릿 아이디가 존재하면 기존 객체 조회하고, 없으면 새로운 객체 생성
         ClientInfo clientInfo = clientInfoRepository.findByClientId(clientId).orElseGet(() -> new ClientInfo(clientId, clientSecret));
