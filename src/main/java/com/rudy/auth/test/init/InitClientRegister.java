@@ -1,6 +1,6 @@
 package com.rudy.auth.test.init;
 
-import com.rudy.auth.client.request.ClientRegistRequest;
+import com.rudy.auth.client.request.ClientRegisterRequest;
 import com.rudy.auth.client.service.ClientInfoService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class InitClientRegister {
     @PostConstruct
     public void init() {
         mapper.forEach((clientId, clientSecret) -> {
-            ClientRegistRequest clientRegistRequest = new ClientRegistRequest("blog-server", "srqKbAmAhJrfO-Dve9tl39mX1izGcBF4dsC9DK30Ofg_Nt5NyDsusoWlgYEgEIsl");
-            clientInfoService.register(clientRegistRequest);
+            ClientRegisterRequest clientRegisterRequest = new ClientRegisterRequest("blog-server", "srqKbAmAhJrfO-Dve9tl39mX1izGcBF4dsC9DK30Ofg_Nt5NyDsusoWlgYEgEIsl");
+            clientInfoService.register(clientRegisterRequest);
             log.info("REGISTER - clientId: {} | clientSecret: {}", clientId, clientSecret);
         });
     }
