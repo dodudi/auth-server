@@ -1,7 +1,7 @@
 package com.rudy.auth.global.config.property;
 
 import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Component
-@ConfigurationProperties(prefix = "security.jwt")
 public class KeyProperties {
+    @Value("${security.jwt.private-key}")
     private String privateKey;
+
+    @Value("${security.jwt.public-key}")
     private String publicKey;
 }

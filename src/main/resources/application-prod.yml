@@ -31,3 +31,8 @@ jwt:
   refresh-token:
     expiration-second: ${REFRESH_TOKEN_SECOND_TIME}
   key: ${JWT_KEY}
+
+security:
+  jwt:
+    private-key: ${TOKEN_PRIVATE_KEY}
+    public-key: ${TOKEN_PUBLIC_KEY}
